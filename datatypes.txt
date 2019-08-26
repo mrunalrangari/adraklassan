@@ -1,0 +1,118 @@
+mysql> use college;
+Database changed
+mysql> create table textdatatypes(
+    -> A char(10),
+    -> B varchar(10),
+    -> C text);
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> INSERT INTO textdatatypes value(
+    -> 'abcdef','123','text data-larger strings are accepted here'),
+    -> ('abcdef','abcdef','text data-larger strings are accepted here');
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select*
+    -> from college;
+ERROR 1146 (42S02): Table 'college.college' doesn't exist
+mysql> select *
+    -> from textdatatypes;
++--------+--------+--------------------------------------------+
+| A      | B      | C                                          |
++--------+--------+--------------------------------------------+
+| abcdef | 123    | text data-larger strings are accepted here |
+| abcdef | abcdef | text data-larger strings are accepted here |
++--------+--------+--------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> create table numdatatypes(
+    -> A tinyint,
+    -> B smallint,
+    -> C medium int,
+    -> D int,
+    -> E bigint,
+    -> F decimal(8,2),
+    -> G double(8,2),
+    -> H float );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that
+corresponds to your MySQL server version for the right syntax to use near 'mediu
+m int,
+D int,
+E bigint,
+F decimal(8,2),
+G double(8,2),
+H float )' at line 4
+mysql> create table numdatatypes(
+    -> A tinyint,
+    -> B smallint,
+    -> C mediumint,
+    -> D int,
+    -> E bigint,
+    -> F decimal(8,2),
+    -> G double(8,2),
+    -> H float);
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into numdatatypes values (13,130,33456,333456,33333456,999999.99,9
+99999.99,999999.99);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into numdatatypes values
+    -> (110,234,3345,33345,3333345,999999.9,999999.99,999999.99);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from numdatatypes;
++------+------+-------+--------+----------+-----------+-----------+--------+
+| A    | B    | C     | D      | E        | F         | G         | H      |
++------+------+-------+--------+----------+-----------+-----------+--------+
+|   13 |  130 | 33456 | 333456 | 33333456 | 999999.99 | 999999.99 | 1e+006 |
+|  110 |  234 |  3345 |  33345 |  3333345 | 999999.90 | 999999.99 | 1e+006 |
++------+------+-------+--------+----------+-----------+-----------+--------+
+2 rows in set (0.00 sec)
+
+mysql> create table datedatatype
+    -> (
+    -> A date,
+    -> B datetime,
+    -> C timestamp,
+    -> D time);
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into datedatatype values (
+    -> current_date(),now(),now(),now());
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into datedatatype value (
+    -> '2019-13-26','2019-08-26 10:30:23','20190826103023','10:30:23');
+ERROR 1292 (22007): Incorrect date value: '2019-13-26' for column 'A' at row 1
+mysql> select * from datedatatype;
++------------+---------------------+---------------------+----------+
+| A          | B                   | C                   | D        |
++------------+---------------------+---------------------+----------+
+| 2019-08-26 | 2019-08-26 21:10:58 | 2019-08-26 21:10:58 | 21:10:58 |
++------------+---------------------+---------------------+----------+
+1 row in set (0.00 sec)
+
+mysql> create table spldatatype(
+    -> id int auto_increment
+    -> primary key,
+    -> membership enum('silver','gold','platinum'),
+    -> hobbies set('swimming','sking','cricket','football')
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into spldatatypes ( membership, hobbies) values ('silver','sking,b
+owling');
+ERROR 1146 (42S02): Table 'college.spldatatypes' doesn't exist
+mysql> insert into spldatatype ( membership, hobbies) values ('silver','sking,bo
+wling');
+ERROR 1265 (01000): Data truncated for column 'hobbies' at row 1
+mysql> insert into spldatatype (membership,hobbies) values('silver','sking,bowli
+ng');
+ERROR 1265 (01000): Data truncated for column 'hobbies' at row 1
+mysql> insert into spldatatype (membership,hobbies) values ( 'silver','bowling')
+;
+ERROR 1265 (01000): Data truncated for column 'hobbies' at row 1
+mysql>
+mysql>
+mysql>
